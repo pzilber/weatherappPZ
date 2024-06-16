@@ -36,7 +36,10 @@ import androidx.navigation.NavController
 import com.example.weatherapp.viewmodel.CityViewModel
 
 @Composable
-fun CityScreen(navController: NavController, cityViewModel: CityViewModel = hiltViewModel()) {
+fun CityScreen(
+    navController: NavController,
+    cityViewModel: CityViewModel = hiltViewModel()
+) {
     var cityName by remember { mutableStateOf(TextFieldValue("")) }
     val cities by cityViewModel.cities.collectAsState()
 
@@ -94,7 +97,7 @@ fun CityScreen(navController: NavController, cityViewModel: CityViewModel = hilt
                         .clickable {
                             cityViewModel.selectCity(city)
                             println("Navegando (CitiesScreen antes de navController) a la pantalla del clima para la ciudad: ${city.name}")
-                            navController.navigate("weather")
+                            navController.navigate("weather/${city.name}")
                             println("Navegando (CitiesScreen despues del navController) a la pantalla del clima para la ciudad: ${city.name}")
                         }
                 )

@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.location.LocationManager
 import com.example.weatherapp.data.model.City
 import com.example.weatherapp.data.model.Weather
-import com.example.weatherapp.data.network.WeatherRepository
 import com.example.weatherapp.data.network.CityRepository
+import com.example.weatherapp.data.network.WeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,21 +51,23 @@ class CityViewModel @OptIn(ExperimentalCoroutinesApi::class)
                 println("Inicio")
                 val weatherData = weatherRepository.getWeather(query)
                 println(weatherData)
-                // Actualiza _cities con la ciudad encontrada.
+                // Actualizo _cities con la ciudad encontrada.
                 _cities.value = listOf(City(query, "Country"))
                 println("Fin")
             } catch (e: Exception) {
                 println("InicioExcepcion")
-                println(e.message) // Aquí puedes agregar más detalles del mensaje de excepción
-                println(e.printStackTrace()) // Imprime el stack trace para más detalles
+                println(e.message)
+                println(e.printStackTrace())
                 println("FinalizaExcepcion")
             }
         }
     }
 
     fun selectCity(city: City) {
-        _selectedCity.value = city
-        println("Ciudad seleccionada en CityViewModel: ${city.name}")
+        viewModelScope.launch {
+            _selectedCity.emit(city)
+            println("Ciudad seleccionada en CityViewModel: ${city.name}")
+        }
     }
 
     fun loadWeather(city: City) {

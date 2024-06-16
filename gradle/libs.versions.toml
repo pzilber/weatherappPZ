@@ -19,6 +19,7 @@ lifecycleRuntimeKtx = "2.8.1"
 activityCompose = "1.9.0"
 composeBom = "2024.05.00"
 navigationCompose = "2.7.7"
+navigationComposeVersion = "2.4.0-alpha10"
 okhttp = "4.12.0"
 playServicesLocation = "21.3.0"
 retrofit = "2.11.0"
@@ -33,6 +34,7 @@ accompanist-permissions = { module = "com.google.accompanist:accompanist-permiss
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-navigation-compose-v240alpha10 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }

@@ -19,27 +19,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.weatherapp.viewmodel.CityViewModel
 import com.example.weatherapp.viewmodel.WeatherViewModel
 
 @Composable
 fun WeatherScreen(
     navController: NavController,
-    cityViewModel: CityViewModel = hiltViewModel(),
-    weatherViewModel: WeatherViewModel = hiltViewModel()
+    weatherViewModel: WeatherViewModel = hiltViewModel(),
+    cityName: String
 ) {
-    val selectedCity by cityViewModel.selectedCity.collectAsState()
     val weather by weatherViewModel.weather.collectAsState()
 
-    println("Valor de selectedCity en WeatherScreen: $selectedCity")
+    println("Valor de cityName en WeatherScreen: $cityName")
     println("Valor de weather en WeatherScreen: $weather")
 
     // Efecto lanzado cuando cambia la ciudad seleccionada
-    LaunchedEffect(selectedCity) {
-        selectedCity?.let {
-            println("Ciudad seleccionada en WeatherScreen: ${it.name}")
-            weatherViewModel.loadWeather(it)
-        }
+    LaunchedEffect(cityName) {
+        println("Ciudad seleccionada en WeatherScreen: $cityName")
+        weatherViewModel.loadWeather(cityName)
     }
 
     // Columna principal
@@ -48,11 +44,10 @@ fun WeatherScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Si los datos del clima no son nulos, mostrar los datos
         println("Entrando a buscar datos del clima en WeatherScreen")
-        weather?.let { weatherData ->
+        if (weather != null) {
+            val weatherData = weather!!
             println("Datos del clima en WeatherScreen: $weatherData")
-            println("Weather data en WeatherScreen: $weather")
 
             // Recuadro para mostrar el clima
             Box(
@@ -63,69 +58,23 @@ fun WeatherScreen(
             ) {
                 Column {
                     println("Construyendo la columna con datos del clima en WeatherScreen")
-                    Text("Ciudad: ${selectedCity?.name}")
+                    Text("Ciudad: $cityName")
                     Text("País: ${weatherData.country}")
                     Text("Temperatura: ${weatherData.temp_c} °C")
                     Text("Humedad: ${weatherData.humidity}%")
                     Text("Condición: ${weatherData.condition}")
-
-                    Spacer(modifier = Modifier.height(16.dp))
-                    /*
-                    Text("7-Day Forecast:")
-                    LazyRow {
-                        items(weatherData.forecast) { forecast ->
-                            Column(modifier = Modifier.padding(8.dp)) {
-                                Text("Day: ${forecast.day}")
-                                Text("Max: ${forecast.maxTemp} °C")
-                                Text("Min: ${forecast.minTemp} °C")
-                            }
-                        }
-                    }
-                    */
                 }
             }
+        } else {
+            // Muestra un mensaje de carga o error si los datos no están disponibles
+            println("Weather data is null en WeatherScreen")
+            Text("Loading weather data or unable to fetch data.")
         }
-
-        /*            Spacer(modifier = Modifier.height(16.dp))
-
-                    // Recuadro para el gráfico de barras
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .background(Color(0xFFADD8E6)) // Color celeste
-                            .padding(16.dp)
-                    ) {
-                        Canvas(modifier = Modifier.fillMaxSize()) {
-                            val barWidth = (size.width / (weather?.forecast?.size * 2)).toFloat()
-                            val maxTemp = weatherData.forecast.maxOf { it.maxTemp }.toFloat()
-
-                            weatherData.forecast.forEachIndexed { index, forecast ->
-                                val barHeight = (forecast.maxTemp / maxTemp * size.height).toFloat()
-                                drawRect(
-                                    color = Color.Blue,
-                                    topLeft = androidx.compose.ui.geometry.Offset(
-                                        x = index * 2 * barWidth,
-                                        y = size.height - barHeight
-                                    ),
-                                    size = androidx.compose.ui.geometry.Size(barWidth, barHeight)
-                                )
-                            }
-                        }
-                    }
-                }
-                */
-
-            ?: run {
-                // Muestra un mensaje de carga o error si los datos no están disponibles
-                Text("Loading weather data or unable to fetch data.")
-                println("Weather data is null")
-            }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = { navController.navigate("cities") }) {
-            Text("Change City")
+            Text("Back to Cities")
         }
     }
 }

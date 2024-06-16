@@ -81,6 +81,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     //implementation ("com.google.android.gms:play-services-location:21.3.0")
+    implementation (libs.androidx.navigation.compose.v240alpha10)
     implementation (libs.play.services.location)
     implementation (libs.kotlinx.coroutines.play.services) // Dependencia para usar `await` con Google Play Services
     // Retrofit

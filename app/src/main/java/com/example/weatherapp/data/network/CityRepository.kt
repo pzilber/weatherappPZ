@@ -14,7 +14,7 @@ class CityRepository @Inject constructor() {
 
     suspend fun getCities(): List<City> {
         return withContext(Dispatchers.IO) {
-            cityList // Aquí puedes hacer una llamada a una API o base de datos si es necesario
+            cityList
         }
     }
 }

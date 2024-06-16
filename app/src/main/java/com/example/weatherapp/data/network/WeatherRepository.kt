@@ -25,6 +25,16 @@ class WeatherRepository @Inject constructor(private val weatherApiService: Weath
     }
 }
 
+fun WeatherResponse.toWeatherResponse(): Weather {
+    return Weather(
+        name = this.location.name,
+        country = this.location.country,
+        temp_c = this.current.temp_c,
+        humidity = this.current.humidity,
+        condition = this.current.condition.text
+    )
+}
+
 /*
     suspend fun searchCities(cities: List<City>): List<WeatherResponse> {
         val weatherResponses = mutableListOf<WeatherResponse>()
@@ -36,15 +46,6 @@ class WeatherRepository @Inject constructor(private val weatherApiService: Weath
     }
 
 */
-fun WeatherResponse.toWeatherResponse(): Weather {
-    return Weather(
-        name = this.location.name,
-        country = this.location.country,
-        temp_c = this.current.temp_c,
-        humidity = this.current.humidity,
-        condition = this.current.condition.text
-    )
-}
 
 /*
 fun WeatherResponse.toWeatherResponse(): Weather {
