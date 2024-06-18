@@ -16,6 +16,7 @@ class WeatherRepository @Inject constructor(private val weatherApiService: Weath
                 println("Temperature en WeatherRepository: ${response.current.temp_c}")
                 println("Humidity en WeatherRepository: ${response.current.humidity}")
                 println("Condition en WeatherRepository: ${response.current.condition.text}")
+                println("Condition en WeatherRepository: ${response.current.condition.icon}")
                 response.toWeatherResponse()
             }
         } catch (e: Exception) {
@@ -31,7 +32,8 @@ fun WeatherResponse.toWeatherResponse(): Weather {
         country = this.location.country,
         temp_c = this.current.temp_c,
         humidity = this.current.humidity,
-        condition = this.current.condition.text
+        condition = this.current.condition.text,
+        icon = this.current.condition.icon
     )
 }
 

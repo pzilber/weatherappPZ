@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.places)
+    implementation(libs.androidx.benchmark.macro)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -115,6 +116,10 @@ dependencies {
     implementation(libs.okhttp)
 
     implementation(libs.play.services.contextmanager)
+
+    //Para el icono
+    implementation (libs.coil.compose)
+    implementation("io.coil-kt:coil-compose:2.1.0")
 }
 
 kapt {

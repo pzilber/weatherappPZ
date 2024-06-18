@@ -1,6 +1,7 @@
 [versions]
 accompanistPermissions = "0.34.0"
 agp = "8.4.1"
+coilCompose = "1.3.2"
 converterGson = "2.11.0"
 hiltAndroid = "2.51.1"
 hiltAndroidCompiler = "2.51.1"
@@ -28,6 +29,7 @@ navigationRuntimeKtx = "2.7.7"
 playServicesContextmanager = "9.4.0"
 appcompat = "1.7.0"
 places = "3.5.0"
+benchmarkMacro = "1.2.4"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -35,6 +37,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-navigation-compose-v240alpha10 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
@@ -65,6 +68,7 @@ androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navig
 play-services-contextmanager = { group = "com.google.android.gms", name = "play-services-contextmanager", version.ref = "playServicesContextmanager" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
+androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro", version.ref = "benchmarkMacro" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

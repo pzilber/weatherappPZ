@@ -6,6 +6,7 @@ data class Weather(
     val temp_c: Float,
     val humidity: Int,
     val condition: String,
+    val icon: String
 )
 /*
 {
