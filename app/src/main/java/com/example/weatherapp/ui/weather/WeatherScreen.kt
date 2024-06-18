@@ -35,9 +35,11 @@ fun WeatherScreen(
     cityName: String
 ) {
     val weather by weatherViewModel.weather.collectAsState()
+    val forecast by weatherViewModel.forecast.collectAsState()
 
     println("Valor de cityName en WeatherScreen: $cityName")
     println("Valor de weather en WeatherScreen: $weather")
+    println("Valor de forecast en WeatherScreen: $forecast")
 
     // Efecto lanzado cuando cambia el nombre de la ciudad
     LaunchedEffect(cityName) {
@@ -92,6 +94,52 @@ fun WeatherScreen(
                         Text("Temperatura: ${weatherData.temp_c} °C")
                         Text("Humedad: ${weatherData.humidity}%")
                         Text("Condición: ${weatherData.condition}")
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Forecast Box
+            if (forecast != null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFFADD8E6)) // Color celeste
+                        .padding(16.dp)
+                ) {
+                    Column {
+                        forecast!!.forEach { forecastDay ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp)
+                            ) {
+                                val forecastIconUrl = "https:${forecastDay.day.condition.icon}"
+                                Image(
+                                    painter = rememberAsyncImagePainter(
+                                        ImageRequest.Builder(LocalContext.current).data(data = forecastIconUrl)
+                                            .apply {
+                                                crossfade(true)
+                                                placeholder(R.drawable.ic_menu_report_image)
+                                                error(R.drawable.ic_menu_report_image)
+                                            }.build()
+                                    ),
+                                    contentDescription = "Forecast Icon",
+                                    modifier = Modifier
+                                        .padding(end = 8.dp)
+                                        .height(64.dp)
+                                        .width(64.dp)
+                                )
+
+                                Column {
+                                    Text("Fecha: ${forecastDay.date}")
+                                    Text("Temperatura Mínima: ${forecastDay.day.mintemp_c} °C")
+                                    Text("Temperatura Máxima: ${forecastDay.day.maxtemp_c} °C")
+                                    Text("Condición: ${forecastDay.day.condition.text}")
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -2,8 +2,8 @@ package com.example.weatherapp.data.model
 
 data class WeatherResponse(
     val current: CurrentWeather,
-    val location: Location
-    // val forecast: ForecastWeather
+    val location: Location,
+     val forecast: Forecast
 )
 
 data class Location(
@@ -21,8 +21,8 @@ data class Condition(
     val text: String,
     val icon: String
 )
-/*
-data class ForecastWeather(
+
+data class Forecast(
     val forecastday: List<ForecastDay>
 )
 
@@ -32,7 +32,7 @@ data class ForecastDay(
 )
 
 data class Day(
-    val maxTemp: Float,
-    val minTemp: Float
+    val maxtemp_c: Float,
+    val mintemp_c: Float,
+    val condition: Condition
 )
-*/

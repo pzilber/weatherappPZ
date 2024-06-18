@@ -1,5 +1,6 @@
 package com.example.weatherapp.data.network
 
+import com.example.weatherapp.data.model.ForecastDay
 import com.example.weatherapp.data.model.Weather
 import com.example.weatherapp.data.model.WeatherResponse
 import javax.inject.Inject
@@ -24,7 +25,19 @@ class WeatherRepository @Inject constructor(private val weatherApiService: Weath
             null
         }
     }
+
+    suspend fun getForecast(query: String, days: Int): List<ForecastDay>? {
+        return try {
+            val response: WeatherResponse = weatherApiService.getForecast("690f96c414f84eb19ad04207242805", query, days)
+            println("Forecast API response: $response")
+            response.forecast.forecastday
+        } catch (e: Exception) {
+            println("Error al obtener el pronóstico: ${e.message}")
+            null
+        }
+    }
 }
+
 
 fun WeatherResponse.toWeatherResponse(): Weather {
     return Weather(
@@ -36,32 +49,3 @@ fun WeatherResponse.toWeatherResponse(): Weather {
         icon = this.current.condition.icon
     )
 }
-
-/*
-    suspend fun searchCities(cities: List<City>): List<WeatherResponse> {
-        val weatherResponses = mutableListOf<WeatherResponse>()
-        for (city in cities) {
-            val response: WeatherResponse = weatherApiService.getWeather("690f96c414f84eb19ad04207242805", city.name)
-            weatherResponses.add(response)
-        }
-        return weatherResponses
-    }
-
-*/
-
-/*
-fun WeatherResponse.toWeatherResponse(): Weather {
-    return Weather(
-        temp_c = this.current.temp_c,
-        humidity = this.current.humidity,
-        condition = this.current.condition.text,
-        forecast = this.forecast.forecastday.map { day ->
-            Weather.Forecast(
-                day = day.date,
-                maxTemp = day.day.maxTemp,
-                minTemp = day.day.minTemp
-            )
-        }
-    )
-}
-*/
