@@ -9,7 +9,9 @@ class WeatherRepository @Inject constructor(private val weatherApiService: Weath
 
     suspend fun getWeather(query: String): Weather? {
         return try {
-            val response: WeatherResponse = weatherApiService.getWeather("690f96c414f84eb19ad04207242805", query = query)
+            val response: WeatherResponse =
+                weatherApiService
+                    .getWeather("690f96c414f84eb19ad04207242805", query = query)
             println("API response: $response")
             run {
                 println("Pais en WeatherRepository: ${response.location.name}")
@@ -28,7 +30,9 @@ class WeatherRepository @Inject constructor(private val weatherApiService: Weath
 
     suspend fun getForecast(query: String, days: Int): List<ForecastDay>? {
         return try {
-            val response: WeatherResponse = weatherApiService.getForecast("690f96c414f84eb19ad04207242805", query, days)
+            val response: WeatherResponse =
+                weatherApiService
+                    .getForecast("690f96c414f84eb19ad04207242805", query, days)
             println("Forecast API response: $response")
             response.forecast.forecastday
         } catch (e: Exception) {

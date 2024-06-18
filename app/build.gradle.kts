@@ -119,7 +119,11 @@ dependencies {
 
     //Para el icono
     implementation (libs.coil.compose)
-    implementation("io.coil-kt:coil-compose:2.1.0")
+    implementation ("io.coil-kt:coil-compose:2.2.2")
+
+    //para guardar las preferencias de la ciudad seleccionada
+    implementation (libs.androidx.preference.ktx)
+
 }
 
 kapt {

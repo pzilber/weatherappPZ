@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.weather
 
+//noinspection SuspiciousImport
 import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -118,7 +119,8 @@ fun WeatherScreen(
                                 val forecastIconUrl = "https:${forecastDay.day.condition.icon}"
                                 Image(
                                     painter = rememberAsyncImagePainter(
-                                        ImageRequest.Builder(LocalContext.current).data(data = forecastIconUrl)
+                                        ImageRequest.Builder(LocalContext.current)
+                                            .data(data = forecastIconUrl)
                                             .apply {
                                                 crossfade(true)
                                                 placeholder(R.drawable.ic_menu_report_image)
@@ -152,28 +154,23 @@ fun WeatherScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
             Row {
-
                 Button(onClick = { navController.navigate("cities") }) {
                     Text("Change City")
                 }
                 Spacer(modifier = Modifier.width(63.dp))
-
                 Column {
                     //Usare este boton para compartir el pronóstico (aun no implementado)
-                    Button(onClick = { navController.navigate("cities") }) {
+                    Button(onClick = { /* Acción de compartir pronóstico */ }) {
                         Text("Share Forecast")
                     }
                 }
             }
-
         }
-
     }
 }

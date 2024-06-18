@@ -23,6 +23,7 @@ navigationCompose = "2.7.7"
 navigationComposeVersion = "2.4.0-alpha10"
 okhttp = "4.12.0"
 playServicesLocation = "21.3.0"
+preferenceKtx = "1.2.1"
 retrofit = "2.11.0"
 supportAnnotations = "28.0.0"
 navigationRuntimeKtx = "2.7.7"
@@ -37,6 +38,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-navigation-compose-v240alpha10 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
+androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }

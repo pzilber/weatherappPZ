@@ -29,7 +29,11 @@ class MainActivity : ComponentActivity() {
             val isGranted = it.value
             if (!isGranted) {
                 // Handle permission denied case
-                Toast.makeText(this, "Location permission is required for this feature.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Location permission is required for this feature.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -65,6 +69,7 @@ class MainActivity : ComponentActivity() {
                 // Permissions are granted
                 // Initialize location-based functionalities here if needed
             }
+
             else -> {
                 // solicitar permiso si no lo había
                 requestPermissionLauncher.launch(

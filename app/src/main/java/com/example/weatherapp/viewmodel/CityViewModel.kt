@@ -1,6 +1,8 @@
 package com.example.weatherapp.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.location.LocationManager
 import com.example.weatherapp.data.model.City
@@ -19,8 +21,9 @@ class CityViewModel @OptIn(ExperimentalCoroutinesApi::class)
 @Inject constructor(
     private val locationManager: LocationManager,
     private val cityRepository: CityRepository,
-    private val weatherRepository: WeatherRepository
-) : ViewModel() {
+    private val weatherRepository: WeatherRepository,
+    application: Application
+) : AndroidViewModel(application) {
 
     private val _cities = MutableStateFlow<List<City>>(emptyList())
     val cities: StateFlow<List<City>> = _cities
@@ -34,8 +37,28 @@ class CityViewModel @OptIn(ExperimentalCoroutinesApi::class)
     private val _currentLocation = MutableStateFlow<City?>(null)
     val currentLocation: StateFlow<City?> get() = _currentLocation
 
+    private val sharedPreferences =
+        application.getSharedPreferences("weather_prefs", Context.MODE_PRIVATE)
+
     init {
         loadCities()
+        loadSavedCity()
+    }
+
+    private fun loadSavedCity() {
+        val cityName = sharedPreferences.getString("selected_city_name", null)
+        val countryName = sharedPreferences.getString("selected_city_country", null)
+        if (cityName != null && countryName != null) {
+            _selectedCity.value = City(cityName, countryName)
+        }
+    }
+
+    private fun saveSelectedCity(city: City) {
+        with(sharedPreferences.edit()) {
+            putString("selected_city_name", city.name)
+            putString("selected_city_country", city.country)
+            apply()
+        }
     }
 
     fun loadCities() {
@@ -48,17 +71,12 @@ class CityViewModel @OptIn(ExperimentalCoroutinesApi::class)
     fun searchCity(query: String) {
         viewModelScope.launch {
             try {
-                println("Inicio")
                 val weatherData = weatherRepository.getWeather(query)
-                println(weatherData)
-                // Actualizo _cities con la ciudad encontrada.
-                _cities.value = listOf(City(query, "Country"))
-                println("Fin")
+                val city = City(query, "Country")
+                _cities.value = listOf(city)
+                saveSelectedCity(city)
             } catch (e: Exception) {
-                println("InicioExcepcion")
                 println(e.message)
-                println(e.printStackTrace())
-                println("FinalizaExcepcion")
             }
         }
     }
@@ -66,7 +84,7 @@ class CityViewModel @OptIn(ExperimentalCoroutinesApi::class)
     fun selectCity(city: City) {
         viewModelScope.launch {
             _selectedCity.emit(city)
-            println("Ciudad seleccionada en CityViewModel: ${city.name}")
+            saveSelectedCity(city)
         }
     }
 
@@ -82,39 +100,10 @@ class CityViewModel @OptIn(ExperimentalCoroutinesApi::class)
         viewModelScope.launch {
             val currentLocation = locationManager.getCurrentLocation()
             _currentLocation.value = currentLocation
-            _cities.value += (currentLocation ?: City("", ""))
-        }
-    }
-}
-
-
-
-/*
-class CityViewModel : ViewModel() {
-
-    private val retrofitTest = Retrofit.Builder()
-        .baseUrl("https://jsonplaceholder.typicode.com/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    private val testApiService = retrofitTest.create(TestApiService::class.java)
-
-    fun testApi() {
-        viewModelScope.launch {
-            try {
-                Log.i("CityViewModel", "Inicio test API")
-                val response = testApiService.getTest()
-                if (response.isSuccessful) {
-                    Log.i("CityViewModel", "Respuesta de prueba: ${response.body()}")
-                } else {
-                    Log.e("CityViewModel", "Error en la respuesta de prueba: ${response.code()}")
-                }
-                Log.i("CityViewModel", "Fin test API")
-            } catch (e: Exception) {
-                Log.e("CityViewModel", "Error en la llamada de prueba: ${e.message}")
-                e.printStackTrace()
+            if (currentLocation != null) {
+                _cities.value += currentLocation
+                saveSelectedCity(currentLocation)
             }
         }
     }
 }
-*/

@@ -26,7 +26,11 @@ fun AppNavigation() {
         ) { backStackEntry ->
             val cityName = backStackEntry.arguments?.getString("cityName") ?: return@composable
             val weatherViewModel = hiltViewModel<WeatherViewModel>()
-            WeatherScreen(navController = navController, weatherViewModel = weatherViewModel, cityName = cityName)
+            WeatherScreen(
+                navController = navController,
+                weatherViewModel = weatherViewModel,
+                cityName = cityName
+            )
         }
     }
 }

@@ -8,12 +8,3 @@ data class Weather(
     val condition: String,
     val icon: String
 )
-/*
-{
-    data class Forecast(
-        val day: String,
-        val maxTemp: Float,
-        val minTemp: Float
-    )
-}
-*/
