@@ -133,6 +133,7 @@ fun WeatherScreen(
                                 )
 
                                 Column {
+
                                     Text("Fecha: ${forecastDay.date}")
                                     Text("Temperatura Mínima: ${forecastDay.day.mintemp_c} °C")
                                     Text("Temperatura Máxima: ${forecastDay.day.maxtemp_c} °C")
@@ -151,8 +152,28 @@ fun WeatherScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(onClick = { navController.navigate("cities") }) {
-            Text("Change City")
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Row {
+                // Carga del icono del tiempo
+                Button(onClick = { navController.navigate("cities") }) {
+                    Text("Change City")
+                }
+                Spacer(modifier = Modifier.width(63.dp))
+
+                Column {
+                    //Usare este boton para compartir el pronóstico
+                    Button(onClick = { navController.navigate("cities") }) {
+                        Text("Share Forecast")
+                    }
+                }
+            }
+
         }
+
     }
 }

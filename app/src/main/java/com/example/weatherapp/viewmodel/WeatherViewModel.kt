@@ -36,7 +36,7 @@ class WeatherViewModel @Inject constructor(
                 println("Llegue al WeatherViewModel")
 
                 if (weatherData != null) {
-                    val forecastData = repository.getForecast(cityName, days = 3)
+                    val forecastData = repository.getForecast(cityName, days = 7)
                     _forecast.value = forecastData
                     println("Forecast data loaded in WeatherViewModel: $forecastData")
                 } else {
