@@ -159,14 +159,14 @@ fun WeatherScreen(
                 .padding(16.dp)
         ) {
             Row {
-                // Carga del icono del tiempo
+
                 Button(onClick = { navController.navigate("cities") }) {
                     Text("Change City")
                 }
                 Spacer(modifier = Modifier.width(63.dp))
 
                 Column {
-                    //Usare este boton para compartir el pronóstico
+                    //Usare este boton para compartir el pronóstico (aun no implementado)
                     Button(onClick = { navController.navigate("cities") }) {
                         Text("Share Forecast")
                     }
