@@ -1,6 +1,5 @@
 package com.example.weatherapp.ui.weather
 
-//noinspection SuspiciousImport
 import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,32 +37,20 @@ fun WeatherScreen(
     val weather by weatherViewModel.weather.collectAsState()
     val forecast by weatherViewModel.forecast.collectAsState()
 
-    println("Valor de cityName en WeatherScreen: $cityName")
-    println("Valor de weather en WeatherScreen: $weather")
-    println("Valor de forecast en WeatherScreen: $forecast")
-
-    // Efecto lanzado cuando cambia el nombre de la ciudad
     LaunchedEffect(cityName) {
-        println("Ciudad seleccionada en WeatherScreen: $cityName")
         weatherViewModel.loadWeather(cityName)
     }
 
-    // Columna principal
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        println("Entrando a buscar datos del clima en WeatherScreen")
         if (weather != null) {
             val weatherData = weather!!
-            println("Datos del clima en WeatherScreen: $weatherData")
 
-            // Verificar la URL del icono
             val iconUrl = "https:${weatherData.icon}"
-            println("Icon URL: $iconUrl")
 
-            // Recuadro para mostrar el clima
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -71,7 +58,6 @@ fun WeatherScreen(
                     .padding(16.dp)
             ) {
                 Row {
-                    // Carga del icono del tiempo
                     Image(
                         painter = rememberAsyncImagePainter(
                             ImageRequest.Builder(LocalContext.current).data(data = iconUrl)
@@ -89,7 +75,6 @@ fun WeatherScreen(
                     )
 
                     Column {
-                        println("Construyendo la columna con datos del clima en WeatherScreen")
                         Text("Ciudad: $cityName")
                         Text("País: ${weatherData.country}")
                         Text("Temperatura: ${weatherData.temp_c} °C")
@@ -101,7 +86,6 @@ fun WeatherScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Forecast Box
             if (forecast != null) {
                 Box(
                     modifier = Modifier
@@ -135,7 +119,6 @@ fun WeatherScreen(
                                 )
 
                                 Column {
-
                                     Text("Fecha: ${forecastDay.date}")
                                     Text("Temperatura Mínima: ${forecastDay.day.mintemp_c} °C")
                                     Text("Temperatura Máxima: ${forecastDay.day.maxtemp_c} °C")
@@ -147,8 +130,6 @@ fun WeatherScreen(
                 }
             }
         } else {
-            // Muestra un mensaje de carga o error si los datos no están disponibles
-            println("Weather data is null en WeatherScreen")
             Text("Loading weather data or unable to fetch data.")
         }
 
@@ -165,7 +146,6 @@ fun WeatherScreen(
                 }
                 Spacer(modifier = Modifier.width(63.dp))
                 Column {
-                    //Usare este boton para compartir el pronóstico (aun no implementado)
                     Button(onClick = { /* Acción de compartir pronóstico */ }) {
                         Text("Share Forecast")
                     }
